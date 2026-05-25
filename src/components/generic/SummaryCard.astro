@@ -1,0 +1,49 @@
+---
+import { Image, type ImageMetadata } from 'astro:assets';
+import { Card } from '@eliancodes/brutal-ui';
+
+interface Props {
+  title: string;
+  imgSrc?: string | ImageMetadata;
+  imgAlt: string;
+  description: string;
+}
+
+const { title, imgAlt, imgSrc, description } = Astro.props;
+
+function isPublicPath(value: string) {
+  return value.startsWith('/') || value.startsWith('http');
+}
+---
+
+<Card color='white'>
+  <h3 class='poppins text-lg md:text-xl'>{title}</h3>
+  {
+    imgSrc && (
+      <div class='my-4 h-56 rounded-lg border-[3px] border-black'>
+        {
+          typeof imgSrc === 'string' && isPublicPath(imgSrc) ? (
+            <img
+              src={imgSrc}
+              alt={imgAlt}
+              width={800}
+              height={400}
+              class='rounded h-full w-full object-cover'
+              loading='lazy'
+            />
+          ) : (
+            <Image
+              src={imgSrc as ImageMetadata}
+              alt={imgAlt}
+              width={800}
+              height={400}
+              class='rounded h-full w-full object-cover'
+            />
+          )
+        }
+      </div>
+    )
+  }
+  <p class='poppins'>{description}</p>
+  <slot />
+</Card>

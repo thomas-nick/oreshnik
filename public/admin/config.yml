@@ -1,0 +1,51 @@
+# Sveltia CMS configuration for Oreshnik (Brutal blog on mahoot.xyz).
+
+backend:
+  name: github
+  repo: thomas-nick/oreshnik
+  branch: main
+  base_url: https://sveltia-cms-auth.nthomas1999.workers.dev
+  auth_endpoint: auth
+  open_authoring: false
+
+publish_mode: editorial_workflow
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://mahoot.xyz
+display_url: https://mahoot.xyz
+
+locale: en
+
+editor:
+  preview: true
+
+collections:
+  - name: blog
+    label: Blog posts
+    label_singular: Post
+    folder: src/data/blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}} — {{description}}"
+    sortable_fields: [title, author, pubDate, draft]
+    view_filters:
+      - label: Drafts
+        field: draft
+        pattern: true
+      - label: Published
+        field: draft
+        pattern: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Author, name: author, widget: string, default: "Nick Thomas" }
+      - { label: Publish date, name: pubDate, widget: datetime, format: "LLL", date_format: false, time_format: false }
+      - { label: Tags, name: tags, widget: list, default: [] }
+      - { label: Cover image, name: imgUrl, widget: image, required: false, media_folder: public/uploads, public_folder: /uploads }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: markdown }
