@@ -11,14 +11,14 @@ const flexDate = z
 
 const blogCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/data/blog' }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       author: z.string().default('Nick Thomas'),
       tags: z.array(z.string()).default([]),
       description: z.string(),
       pubDate: flexDate,
-      imgUrl: z.union([image(), z.string()]).optional(),
+      imgUrl: z.string().optional(),
       draft: z.boolean().optional().default(false),
     }),
 });

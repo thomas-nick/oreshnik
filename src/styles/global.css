@@ -66,7 +66,7 @@ body::before {
     rgba(0, 0, 0, 0.18) 3px
   );
   mix-blend-mode: multiply;
-  opacity: 0.35;
+  opacity: 0.28;
 }
 body::after {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.65 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>");
@@ -292,3 +292,33 @@ a:hover {
   border: 2px solid var(--sw-black);
 }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--sw-coral); }
+
+/* ===== Blog sidebar cosmonaut art ===== */
+.blog-sidebar__art {
+  position: relative;
+  overflow: hidden;
+  border-left: 2px solid var(--sw-teal);
+  padding-left: 1rem;
+}
+
+.blog-sidebar__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+  opacity: 0.46;
+  mix-blend-mode: screen;
+  filter: saturate(1.02) contrast(0.98);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 6%,
+    rgba(0, 0, 0, 0.75) 50%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 6%,
+    rgba(0, 0, 0, 0.75) 50%,
+    transparent 100%
+  );
+}

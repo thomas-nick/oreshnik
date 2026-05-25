@@ -2,9 +2,10 @@
 interface Props {
   pubDate: Date;
   author: string;
+  dispatchNumber: string;
 }
 
-const { pubDate, author } = Astro.props;
+const { pubDate, author, dispatchNumber } = Astro.props;
 const formatted = pubDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -13,7 +14,7 @@ const formatted = pubDate.toLocaleDateString('en-US', {
 ---
 
 <article
-  class='w-full max-w-prose mx-auto rounded-lg border-[3px] p-6 md:p-10 card-shadow prose md:prose-lg poppins'
+  class='blog-article lg:col-span-9 w-full rounded-lg border-[3px] p-6 md:p-10 card-shadow prose md:prose-lg poppins'
   style='background-color: var(--sw-cream); border-color: var(--sw-black); color: var(--sw-black);'
 >
   <a
@@ -26,7 +27,7 @@ const formatted = pubDate.toLocaleDateString('en-US', {
   </a>
 
   <p class='sw-kicker mt-4' style='color: var(--sw-red);'>
-    Filed {formatted} &middot; {author}
+    Dispatch // {dispatchNumber} &middot; Filed {formatted} &middot; {author}
   </p>
 
   <slot />
@@ -47,7 +48,11 @@ const formatted = pubDate.toLocaleDateString('en-US', {
 </article>
 
 <style is:global>
-  /* Make Tailwind prose readable on the cream paper card */
+  .blog-article.prose,
+  .blog-article.prose-lg {
+    max-width: 72ch;
+  }
+
   article.prose,
   article.prose-lg {
     --tw-prose-body: var(--sw-black);

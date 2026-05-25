@@ -1,22 +1,25 @@
 ---
-import { Image, type ImageMetadata } from 'astro:assets';
 import { Card } from '@eliancodes/brutal-ui';
 
 interface Props {
   title: string;
-  imgSrc?: string | ImageMetadata;
+  imgSrc?: string;
   imgAlt: string;
   description: string;
+  dispatchNumber?: string;
 }
 
-const { title, imgAlt, imgSrc, description } = Astro.props;
-
-function isPublicPath(value: string) {
-  return value.startsWith('/') || value.startsWith('http');
-}
+const { title, imgAlt, imgSrc, description, dispatchNumber } = Astro.props;
 ---
 
 <Card color='#f4e8c8'>
+  {
+    dispatchNumber && (
+      <p class='sw-kicker' style='color: var(--sw-red);'>
+        Dispatch // {dispatchNumber}
+      </p>
+    )
+  }
   <h3 class='russo text-xl md:text-2xl' style='color: var(--sw-black);'>
     {title}
   </h3>
@@ -26,26 +29,14 @@ function isPublicPath(value: string) {
         class='my-4 h-56 rounded-lg border-[3px] overflow-hidden'
         style='border-color: var(--sw-black);'
       >
-        {
-          typeof imgSrc === 'string' && isPublicPath(imgSrc) ? (
-            <img
-              src={imgSrc}
-              alt={imgAlt}
-              width={800}
-              height={400}
-              class='h-full w-full object-cover'
-              loading='lazy'
-            />
-          ) : (
-            <Image
-              src={imgSrc as ImageMetadata}
-              alt={imgAlt}
-              width={800}
-              height={400}
-              class='h-full w-full object-cover'
-            />
-          )
-        }
+        <img
+          src={imgSrc}
+          alt={imgAlt}
+          width={800}
+          height={400}
+          class='h-full w-full object-cover'
+          loading='lazy'
+        />
       </div>
     )
   }

@@ -12,14 +12,9 @@ interface Props {
 const { headings = [] } = Astro.props;
 ---
 
-<aside>
-  <nav class='hidden lg:block sticky top-6 pr-8'>
-    <p
-      class='sw-kicker mb-3'
-      style='color: var(--sw-coral);'
-    >
-      Index
-    </p>
+<aside class='blog-sidebar lg:col-span-3 hidden lg:flex lg:flex-col sticky top-6 h-[calc(100vh-3rem)] pr-8'>
+  <nav class='shrink-0'>
+    <p class='sw-kicker mb-3' style='color: var(--sw-coral);'>Index</p>
     <ul class='border-l-2 pl-4' style='border-color: var(--sw-teal);'>
       {
         headings.map((heading) => (
@@ -39,6 +34,17 @@ const { headings = [] } = Astro.props;
       }
     </ul>
   </nav>
+
+  <div class='blog-sidebar__art mt-8 flex-1 min-h-[12rem]' aria-hidden='true'>
+    <img
+      src='/images/cosmonaut-hero.png'
+      alt=''
+      width='600'
+      height='900'
+      loading='lazy'
+      decoding='async'
+    />
+  </div>
 </aside>
 
 <style>

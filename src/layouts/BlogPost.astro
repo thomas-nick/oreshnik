@@ -18,15 +18,17 @@ interface Props {
   headings?: Heading[];
   description: string;
   title: string;
+  dispatchNumber: string;
 }
 
-const { author, pubDate, headings, description, title } = Astro.props;
+const { author, pubDate, headings, description, title, dispatchNumber } =
+  Astro.props;
 ---
 
 <Layout title={title} description={description} ogImage={ogImage}>
-  <main class='p-6 lg:grid lg:grid-cols-3 flex justify-center'>
+  <main class='p-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-start'>
     <BlogSideBar headings={headings ?? []} />
-    <BlogContent {pubDate} {author}>
+    <BlogContent {pubDate} {author} {dispatchNumber}>
       <slot />
     </BlogContent>
   </main>

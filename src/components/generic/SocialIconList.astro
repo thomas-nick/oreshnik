@@ -1,0 +1,55 @@
+---
+import SocialIcon from './SocialIcon.astro';
+import type { SocialLink } from '../../lib/socials';
+
+interface Props {
+  links: SocialLink[];
+  iconClass?: string;
+}
+
+const { links, iconClass = 'h-6 w-6' } = Astro.props;
+---
+
+<ul class='social-icon-list flex flex-wrap gap-3'>
+  {
+    links.map((item) => (
+      <li>
+        <a
+          href={item.url}
+          class='social-icon-link'
+          target={item.url.startsWith('/') ? '_self' : '_blank'}
+          rel={item.url.startsWith('/') ? undefined : 'noopener noreferrer'}
+          title={item.name}
+        >
+          <SocialIcon icon={item.icon} class={iconClass} />
+          <span class='sr-only'>{item.name}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 2px solid var(--sw-black);
+    background-color: var(--sw-cream);
+    color: var(--sw-red);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
+    filter: drop-shadow(3px 3px 0 var(--sw-black));
+  }
+
+  .social-icon-link:hover {
+    background-color: var(--sw-black);
+    color: var(--sw-cream);
+    transform: translate(1px, 1px);
+    filter: drop-shadow(2px 2px 0 var(--sw-black));
+  }
+</style>

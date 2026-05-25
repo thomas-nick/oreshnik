@@ -5,9 +5,10 @@ import SummaryCard from '../generic/SummaryCard.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  dispatchNumber?: string;
 }
 
-const { post } = Astro.props;
+const { post, dispatchNumber } = Astro.props;
 ---
 
 <SummaryCard
@@ -15,6 +16,7 @@ const { post } = Astro.props;
   imgAlt={post.data.title}
   imgSrc={post.data.imgUrl}
   description={post.data.description}
+  {dispatchNumber}
 >
   <div class='flex justify-end my-4'>
     <Button href={`/blog/${post.id}/`}>Read post &rarr;</Button>

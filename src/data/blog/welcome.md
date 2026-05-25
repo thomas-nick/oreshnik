@@ -6,7 +6,7 @@ pubDate: 2026-05-25
 tags:
   - meta
   - design
-imgUrl: public/uploads/oresh.webp
+imgUrl: /uploads/oresh.webp
 draft: false
 ---
 

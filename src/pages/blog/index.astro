@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogList from '@components/blog/BlogList.astro';
-import HeroBurst from '@components/generic/HeroBurst.astro';
 import Layout from '@layouts/Default.astro';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft).then(
@@ -15,7 +14,7 @@ const posts = await getCollection('blog', ({ data }) => !data.draft).then(
   pageTitle='Oreshnik | Blog'
 >
   <main class='bg-green-theme p-6'>
-    <header class='relative mb-10'>
+    <header class='relative mb-10 max-w-3xl'>
       <p class='sw-kicker'>Archive // 02</p>
       <h1
         class='russo mt-2 text-5xl md:text-7xl leading-[0.95]'
@@ -30,12 +29,6 @@ const posts = await getCollection('blog', ({ data }) => !data.draft).then(
         Notes, projects, and field reports. Filed in chronological order, more
         or less. Tagged for the curious.
       </p>
-      <div
-        class='hidden md:block absolute right-0 top-0 pointer-events-none'
-        style='color: var(--sw-teal);'
-      >
-        <HeroBurst size={120} />
-      </div>
     </header>
 
     <BlogList posts={posts} />

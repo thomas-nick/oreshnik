@@ -1,7 +1,6 @@
 ---
 import SocialIcon from '@components/generic/SocialIcon.astro';
-
-type SocialIconName = 'github' | 'twitter' | 'linkedin' | 'rss';
+import { socialLinks } from '../../lib/socials';
 
 interface Props {
   pageTitle?: string;
@@ -12,34 +11,37 @@ const navigationItems = [
   { name: 'Blog', url: '/blog/' },
 ];
 
-const socialIcons: Array<{ name: string; url: string; icon: SocialIconName }> = [
-  { name: 'GitHub', url: 'https://github.com/thomas-nick', icon: 'github' },
-  { name: 'RSS',    url: '/feed.xml',                       icon: 'rss' },
-];
-
 const { pageTitle } = Astro.props;
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isActive(url: string): boolean {
+  const normalized = url.replace(/\/$/, '') || '/';
+  if (normalized === '/') return pathname === '/';
+  return pathname === normalized || pathname.startsWith(`${normalized}/`);
+}
 ---
 
 <header
-  class='border-b-4 border-black flex justify-between p-6 items-center relative z-10'
+  class='border-b-4 border-black flex justify-between p-6 items-center relative z-10 gap-4'
   style='background-color: rgba(10, 10, 31, 0.55); backdrop-filter: blur(6px);'
 >
   {pageTitle && <h1 class='hidden'>{pageTitle}</h1>}
 
-  <a href='/' title='Back to Home' class='sw-wordmark'>
+  <a href='/' title='Back to Home' class='sw-wordmark shrink-0'>
     Oreshnik
   </a>
 
   <nav class='hidden md:inline-block'>
     <h2 class='hidden'>Navigation</h2>
-    <ul class='flex gap-6 items-center poppins'>
+    <ul class='flex gap-5 items-center poppins'>
       {
         navigationItems.map((item) => (
           <li>
             <a
-              class='nav-link text-lg font-medium'
+              class:list={['nav-link text-lg font-medium', isActive(item.url) && 'nav-link--active']}
               href={item.url}
               title={`Go to ${item.name}`}
+              aria-current={isActive(item.url) ? 'page' : undefined}
             >
               {item.name}
             </a>
@@ -47,32 +49,68 @@ const { pageTitle } = Astro.props;
         ))
       }
       <li>
-        <a href='/admin/' class='nav-link text-sm uppercase tracking-widest'>
+        <a
+          href='/admin/'
+          class:list={['nav-link text-sm uppercase tracking-widest', isActive('/admin/') && 'nav-link--active']}
+          aria-current={isActive('/admin/') ? 'page' : undefined}
+        >
           Editor
         </a>
       </li>
-      {
-        socialIcons.map((item) => (
-          <li>
-            <a
-              href={item.url}
-              class='nav-link'
-              target={item.url.startsWith('/') ? '_self' : '_blank'}
-              rel='noopener'
-              title={item.name}
-            >
-              <SocialIcon icon={item.icon} class='h-6 w-6' />
-            </a>
-          </li>
-        ))
-      }
+      <li class='nav-socials' aria-label='Social links'>
+        <ul class='flex gap-4 items-center'>
+          {
+            socialLinks.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class='nav-link nav-link--icon'
+                  target={item.url.startsWith('/') ? '_self' : '_blank'}
+                  rel={item.url.startsWith('/') ? undefined : 'noopener noreferrer'}
+                  title={item.name}
+                >
+                  <SocialIcon icon={item.icon} class='h-5 w-5' />
+                  <span class='sr-only'>{item.name}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
     </ul>
   </nav>
 
-  <nav class='md:hidden flex gap-4 poppins items-center'>
+  <nav class='md:hidden flex flex-wrap gap-x-4 gap-y-2 poppins items-center justify-end'>
     <h2 class='hidden'>Mobile Navigation</h2>
-    <a href='/blog/' class='nav-link'>Blog</a>
+    <a
+      href='/'
+      class:list={['nav-link', isActive('/') && 'nav-link--active']}
+      aria-current={isActive('/') ? 'page' : undefined}
+    >
+      Home
+    </a>
+    <a
+      href='/blog/'
+      class:list={['nav-link', isActive('/blog/') && 'nav-link--active']}
+      aria-current={isActive('/blog/') ? 'page' : undefined}
+    >
+      Blog
+    </a>
     <a href='/admin/' class='nav-link uppercase text-sm tracking-widest'>Editor</a>
+    {
+      socialLinks.map((item) => (
+        <a
+          href={item.url}
+          class='nav-link nav-link--icon'
+          target={item.url.startsWith('/') ? '_self' : '_blank'}
+          rel={item.url.startsWith('/') ? undefined : 'noopener noreferrer'}
+          title={item.name}
+        >
+          <SocialIcon icon={item.icon} class='h-5 w-5' />
+          <span class='sr-only'>{item.name}</span>
+        </a>
+      ))
+    }
   </nav>
 </header>
 
@@ -80,9 +118,27 @@ const { pageTitle } = Astro.props;
   .nav-link {
     color: var(--sw-cream);
     transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+    text-decoration: none;
   }
   .nav-link:hover {
     color: var(--sw-coral);
     transform: translateY(-1px);
+  }
+  .nav-link--active {
+    color: var(--sw-coral);
+    box-shadow: inset 0 -2px 0 var(--sw-red);
+  }
+  .nav-link--active:hover {
+    transform: none;
+  }
+  .nav-link--icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-socials {
+    margin-left: 0.25rem;
+    padding-left: 1rem;
+    border-left: 1px solid color-mix(in srgb, var(--sw-cream) 25%, transparent);
   }
 </style>

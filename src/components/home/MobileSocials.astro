@@ -1,33 +1,9 @@
 ---
-import SocialIcon from '@components/generic/SocialIcon.astro';
-
-type SocialIconName = 'github' | 'twitter' | 'linkedin' | 'rss';
-
-const socials: Array<{ name: string; url: string; icon: SocialIconName }> = [
-  { name: 'GitHub', url: 'https://github.com/thomas-nick', icon: 'github' },
-  { name: 'RSS',    url: '/feed.xml',                       icon: 'rss' },
-];
+import SocialIconList from '@components/generic/SocialIconList.astro';
+import { socialLinks } from '../../lib/socials';
 ---
 
 <section class='md:hidden mb-6'>
   <h2 class='hidden'>Socials</h2>
-  <ul class='flex gap-3 justify-end'>
-    {
-      socials.map((item) => (
-        <li
-          class='rounded border-2 px-3 py-2 card-shadow'
-          style='border-color: var(--sw-black); background-color: var(--sw-cream); color: var(--sw-red);'
-        >
-          <a
-            href={item.url}
-            target={item.url.startsWith('/') ? '_self' : '_blank'}
-            rel='noopener'
-            title={`Go to ${item.name}`}
-          >
-            <SocialIcon icon={item.icon} class='h-5 w-5' />
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <SocialIconList links={socialLinks} iconClass='h-5 w-5' />
 </section>
