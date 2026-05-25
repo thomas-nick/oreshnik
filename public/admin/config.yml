@@ -22,6 +22,30 @@ editor:
   preview: true
 
 collections:
+  - name: home
+    label: Home page
+    files:
+      - label: Home page
+        name: home
+        file: src/data/home/home.md
+        format: frontmatter
+        extension: md
+        fields:
+          - { label: Site description (SEO), name: description, widget: text, hint: "Search and social preview text." }
+          - { label: "Transmission — kicker", name: transmissionKicker, widget: string, default: "Transmission // 01" }
+          - { label: "Transmission — name (highlighted)", name: nameHighlight, widget: string }
+          - { label: "Transmission — name (second line)", name: nameLine2, widget: string }
+          - { label: "Transmission — tagline", name: tagline, widget: text }
+          - { label: "Transmission — button label", name: heroButtonLabel, widget: string, default: "Read the dispatches →" }
+          - { label: "Transmission — button link", name: heroButtonHref, widget: string, default: "/blog/" }
+          - { label: "Transmission — manifest jump link", name: manifestAnchorLabel, widget: string, default: "Manifest" }
+          - { label: "Manifest — kicker", name: manifestKicker, widget: string, default: "Manifest" }
+          - { label: "Manifest — title", name: manifestTitle, widget: string, hint: "Words before the red highlight." }
+          - { label: "Manifest — title highlight (red)", name: manifestTitleHighlight, widget: string, required: false }
+          - { label: Manifest body, name: body, widget: markdown, hint: "About copy — paragraphs and links." }
+    editor:
+      preview: true
+
   - name: blog
     label: Blog posts
     label_singular: Post

@@ -4,16 +4,22 @@ import RecentBlogPosts from '@components/generic/RecentBlogPosts.astro';
 import SocialIconList from '@components/generic/SocialIconList.astro';
 import { Button, Card, Pill } from '@eliancodes/brutal-ui';
 import Layout from '@layouts/Default.astro';
-import { socialLinks } from '../lib/socials';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import { getDispatchNumber } from '../lib/dispatch';
+import { socialLinks } from '../lib/socials';
 
 const builtWith = [
-  { name: 'Astro',   url: 'https://astro.build/' },
-  { name: 'Brutal',  url: 'https://brutal.elian.codes/' },
+  { name: 'Astro', url: 'https://astro.build/' },
+  { name: 'Brutal', url: 'https://brutal.elian.codes/' },
   { name: 'Tailwind', url: 'https://tailwindcss.com/' },
   { name: 'Sveltia', url: 'https://sveltia.com/' },
 ];
+
+const home = await getEntry('home', 'home');
+if (!home) throw new Error('Missing src/data/home/home.md');
+
+const { Content: ManifestContent } = await render(home);
+const h = home.data;
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPost = [...allPosts].sort(
@@ -24,48 +30,42 @@ const latestDispatch = latestPost
   : null;
 ---
 
-<Layout
-  title='Home'
-  pageTitle='Oreshnik | Home'
-  description='Personal blog and portfolio — design, UX, and the occasional dispatch from low orbit.'
->
+<Layout title='Home' pageTitle='Oreshnik | Home' description={h.description}>
   <main class='bg-pink-theme p-6 relative overflow-hidden'>
     <!-- ===== HERO ===== -->
     <section class='relative mt-2 grid md:grid-cols-12 gap-6'>
       <h2 class='hidden'>About</h2>
 
-      <!-- Big intro card -->
       <div class='md:col-span-8'>
         <Card color='#f4e8c8'>
           <div class='relative overflow-hidden'>
-            <p class='sw-kicker'>Transmission // 01</p>
+            <p class='sw-kicker'>{h.transmissionKicker}</p>
 
             <h1
               class='russo mt-2 text-5xl md:text-7xl lg:text-8xl leading-[0.95]'
               style='color: var(--sw-black);'
             >
-              <span style='color: var(--sw-red);'>NICK</span><br />
-              THOMAS
+              <span style='color: var(--sw-red);'>{h.nameHighlight}</span><br />
+              {h.nameLine2}
             </h1>
 
             <p
               class='outfit mt-4 text-lg md:text-2xl max-w-prose'
               style='color: var(--sw-black);'
             >
-              Design, UX, UI &mdash; broadcast from a small workshop somewhere
-              between Bangkok and the upper atmosphere.
+              {h.tagline}
             </p>
 
             <div class='mt-6 flex gap-3 flex-wrap items-center'>
-              <Button target='_self' href='/blog/'>
-                Read the dispatches &rarr;
+              <Button target='_self' href={h.heroButtonHref}>
+                {h.heroButtonLabel}
               </Button>
               <a
                 href='#about'
                 class='russo uppercase tracking-widest text-sm border-b-2'
                 style='color: var(--sw-red); border-color: var(--sw-red);'
               >
-                Manifest
+                {h.manifestAnchorLabel}
               </a>
             </div>
 
@@ -79,7 +79,6 @@ const latestDispatch = latestPost
         </Card>
       </div>
 
-      <!-- Side: latest dispatch -->
       <div class='md:col-span-4'>
         {
           latestPost ? (
@@ -123,27 +122,27 @@ const latestDispatch = latestPost
       </div>
     </section>
 
-    <!-- ===== ABOUT / SECONDARY ===== -->
+    <!-- ===== MANIFEST ===== -->
     <section id='about' class='grid md:grid-cols-8 gap-6 mt-8'>
       <div class='md:col-span-5'>
         <Card color='#f4e8c8'>
-          <p class='sw-kicker'>Manifest</p>
+          <p class='sw-kicker'>{h.manifestKicker}</p>
           <h2
             class='russo mt-2 text-3xl md:text-5xl lg:text-6xl'
             style='color: var(--sw-black);'
           >
-            About this <span style='color: var(--sw-red);'>signal</span>
+            {h.manifestTitle}
+            {
+              h.manifestTitleHighlight && (
+                <span style='color: var(--sw-red);'>
+                  {' '}{h.manifestTitleHighlight}
+                </span>
+              )
+            }
           </h2>
-          <p class='outfit mt-4' style='color: var(--sw-black);'>
-            Personal site for design notes, half-finished projects, and the
-            occasional travelogue. Posts are typed at <a href='/admin/'>/admin</a>,
-            saved to <a href='https://github.com/thomas-nick/oreshnik'>git</a>,
-            and broadcast to <a href='https://mahoot.xyz'>mahoot.xyz</a>.
-          </p>
-          <p class='outfit mt-3' style='color: var(--sw-black);'>
-            Best read with a strong tea, weak Wi-Fi, and a healthy disregard for
-            the official forecast.
-          </p>
+          <div class='manifest-body outfit mt-4' style='color: var(--sw-black);'>
+            <ManifestContent />
+          </div>
         </Card>
       </div>
 
@@ -175,7 +174,10 @@ const latestDispatch = latestPost
               ))
             }
           </ul>
-          <div class='mt-6 pt-4 border-t border-dashed' style='border-color: var(--sw-black);'>
+          <div
+            class='mt-6 pt-4 border-t border-dashed'
+            style='border-color: var(--sw-black);'
+          >
             <p class='sw-kicker' style='color: var(--sw-black);'>Receiver</p>
             <SocialIconList links={socialLinks} />
           </div>
@@ -183,7 +185,23 @@ const latestDispatch = latestPost
       </div>
     </section>
 
-    <!-- ===== Recent ===== -->
     <RecentBlogPosts />
   </main>
 </Layout>
+
+<style is:global>
+  .manifest-body :is(p, ul, ol) {
+    margin-top: 0.75rem;
+  }
+  .manifest-body :is(p, ul, ol):first-child {
+    margin-top: 0;
+  }
+  .manifest-body a {
+    color: var(--sw-red);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .manifest-body a:hover {
+    color: var(--sw-black);
+  }
+</style>

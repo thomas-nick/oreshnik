@@ -23,6 +23,25 @@ const blogCollection = defineCollection({
     }),
 });
 
+const homeCollection = defineCollection({
+  loader: glob({ pattern: 'home.md', base: './src/data/home' }),
+  schema: () =>
+    z.object({
+      description: z.string(),
+      transmissionKicker: z.string().default('Transmission // 01'),
+      nameHighlight: z.string(),
+      nameLine2: z.string(),
+      tagline: z.string(),
+      heroButtonLabel: z.string().default('Read the dispatches →'),
+      heroButtonHref: z.string().default('/blog/'),
+      manifestAnchorLabel: z.string().default('Manifest'),
+      manifestKicker: z.string().default('Manifest'),
+      manifestTitle: z.string(),
+      manifestTitleHighlight: z.string().optional(),
+    }),
+});
+
 export const collections = {
   blog: blogCollection,
+  home: homeCollection,
 };
