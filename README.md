@@ -28,7 +28,7 @@ OAuth uses the same Cloudflare Worker as Siam History (`sveltia-cms-auth.nthomas
 
 ## Deploy
 
-Push to `main`. GitHub Actions builds and deploys to Hostinger.
+Push to `main` deploys to Hostinger at **mahoot.xyz**.
 
 **Repo secrets** (Settings → Secrets → Actions):
 
