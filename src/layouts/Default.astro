@@ -1,6 +1,7 @@
 ---
 import BaseFooter from '@components/layout/BaseFooter.astro';
 import BaseNavigation from '@components/layout/BaseNavigation.astro';
+import SovietwaveBg from '@components/layout/SovietwaveBg.astro';
 import BaseHead from '../components/layout/BaseHead.astro';
 import '../styles/global.css';
 
@@ -19,6 +20,7 @@ const { title, description, classList, pageTitle, ogImage } = Astro.props;
   <BaseHead ogImage={ogImage} title={title} description={description} />
 
   <body class:list={[classList]}>
+    <SovietwaveBg />
     <BaseNavigation {pageTitle} />
     <slot />
     <BaseFooter />

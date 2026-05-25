@@ -11,24 +11,19 @@ export async function getStaticPaths() {
   );
 
   const tags: string[] = [];
-
   allPosts.forEach((post) => {
-    post.data.tags.forEach((tag) => {
-      tags.push(tag.toLowerCase());
-    });
+    post.data.tags.forEach((tag) => tags.push(tag.toLowerCase()));
   });
 
-  return Array.from(new Set(tags)).map((tag) => {
-    return {
-      params: { tag },
-      props: {
-        tag,
-        blogposts: allPosts.filter((post) =>
-          post.data.tags.map((tag) => tag.toLowerCase()).includes(tag)
-        ),
-      },
-    };
-  });
+  return Array.from(new Set(tags)).map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      blogposts: allPosts.filter((post) =>
+        post.data.tags.map((t) => t.toLowerCase()).includes(tag),
+      ),
+    },
+  }));
 }
 
 interface Props {
@@ -40,13 +35,22 @@ const { tag, blogposts } = Astro.props;
 ---
 
 <Layout
-  title={`Blog: ${tag}`}
-  description={`Brutal Blog | All posts tagged with ${tag}`}
-  pageTitle={`Brutal Blog | Blogposts tagged with ${tag}`}
+  title={`Tag: ${tag}`}
+  description={`Oreshnik | All posts tagged with ${tag}`}
+  pageTitle={`Oreshnik | ${tag}`}
 >
-  <main class='grid gap-4 bg-purple-theme p-6'>
-    <div>
-      <Button href='/blog/'>&larr; Back to blog</Button>
+  <main class='bg-purple-theme p-6'>
+    <header class='mb-8'>
+      <p class='sw-kicker'>Filter</p>
+      <h1
+        class='russo mt-2 text-4xl md:text-6xl'
+        style='color: var(--sw-cream);'
+      >
+        Tagged: <span style='color: var(--sw-red);'>{tag}</span>
+      </h1>
+    </header>
+    <div class='mb-6'>
+      <Button href='/blog/'>&larr; Back to dispatches</Button>
     </div>
     <BlogList posts={blogposts} />
   </main>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogList from '@components/blog/BlogList.astro';
+import HeroBurst from '@components/generic/HeroBurst.astro';
 import Layout from '@layouts/Default.astro';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft).then(
@@ -10,10 +11,33 @@ const posts = await getCollection('blog', ({ data }) => !data.draft).then(
 
 <Layout
   title='Blog'
-  description='Brutal Blog | On this page you can find a collection of blogposts'
-  pageTitle='Brutal Blog'
+  description='Oreshnik blog | Dispatches on design, UX, and UI.'
+  pageTitle='Oreshnik | Blog'
 >
   <main class='bg-green-theme p-6'>
+    <header class='relative mb-10'>
+      <p class='sw-kicker'>Archive // 02</p>
+      <h1
+        class='russo mt-2 text-5xl md:text-7xl leading-[0.95]'
+        style='color: var(--sw-cream);'
+      >
+        <span style='color: var(--sw-red);'>Dispatches</span>
+      </h1>
+      <p
+        class='outfit mt-3 max-w-prose text-lg'
+        style='color: var(--sw-cream); opacity: 0.85;'
+      >
+        Notes, projects, and field reports. Filed in chronological order, more
+        or less. Tagged for the curious.
+      </p>
+      <div
+        class='hidden md:block absolute right-0 top-0 pointer-events-none'
+        style='color: var(--sw-teal);'
+      >
+        <HeroBurst size={120} />
+      </div>
+    </header>
+
     <BlogList posts={posts} />
   </main>
 </Layout>

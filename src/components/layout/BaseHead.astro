@@ -15,39 +15,59 @@ if (Astro.props.ogImage === undefined) {
 }
 
 const { title, description, ogImage } = Astro.props;
+const siteName = 'Oreshnik';
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 ---
 
 <head>
   <LocalFont />
+
   <meta charset='utf-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1' />
   <meta name='generator' content={Astro.generator} />
 
   <link
-    rel='alternate'
-    href='https://brutal.elian.codes/blog.xml'
-    type='application/rss+xml'
+    rel='preconnect'
+    href='https://fonts.googleapis.com'
+  />
+  <link
+    rel='preconnect'
+    href='https://fonts.gstatic.com'
+    crossorigin
+  />
+  <link
+    rel='stylesheet'
+    href='https://fonts.googleapis.com/css2?family=Russo+One&display=swap'
   />
 
-  <meta name='title' content={`Brutal Theme | ${title}`} />
+  <link
+    rel='alternate'
+    href='/feed.xml'
+    type='application/rss+xml'
+    title='Oreshnik'
+  />
+
+  <meta name='title' content={fullTitle} />
   <meta name='description' content={description} />
+  <meta name='theme-color' content='#0a0a1f' />
 
   <meta property='og:type' content='website' />
   <meta property='og:url' content={canonicalURL} />
-  <meta property='og:title' content={title} />
+  <meta property='og:title' content={fullTitle} />
+  <meta property='og:site_name' content={siteName} />
   <meta property='og:description' content={description} />
   <meta property='og:image' content={ogImage} />
 
   <meta property='twitter:card' content='summary_large_image' />
   <meta property='twitter:url' content={canonicalURL} />
-  <meta property='twitter:title' content={title} />
+  <meta property='twitter:title' content={fullTitle} />
   <meta property='twitter:description' content={description} />
   <meta property='twitter:image' content={ogImage} />
 
   <link rel='canonical' href={canonicalURL} />
-  <link rel='icon' type='image/svg' href='/favicon.svg' />
+  <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
-  <title>Brutal Theme | {title}</title>
+  <title>{fullTitle}</title>
 
   <ClientRouter />
 

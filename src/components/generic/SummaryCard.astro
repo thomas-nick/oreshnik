@@ -16,11 +16,16 @@ function isPublicPath(value: string) {
 }
 ---
 
-<Card color='white'>
-  <h3 class='poppins text-lg md:text-xl'>{title}</h3>
+<Card color='#f4e8c8'>
+  <h3 class='russo text-xl md:text-2xl' style='color: var(--sw-black);'>
+    {title}
+  </h3>
   {
     imgSrc && (
-      <div class='my-4 h-56 rounded-lg border-[3px] border-black'>
+      <div
+        class='my-4 h-56 rounded-lg border-[3px] overflow-hidden'
+        style='border-color: var(--sw-black);'
+      >
         {
           typeof imgSrc === 'string' && isPublicPath(imgSrc) ? (
             <img
@@ -28,7 +33,7 @@ function isPublicPath(value: string) {
               alt={imgAlt}
               width={800}
               height={400}
-              class='rounded h-full w-full object-cover'
+              class='h-full w-full object-cover'
               loading='lazy'
             />
           ) : (
@@ -37,13 +42,13 @@ function isPublicPath(value: string) {
               alt={imgAlt}
               width={800}
               height={400}
-              class='rounded h-full w-full object-cover'
+              class='h-full w-full object-cover'
             />
           )
         }
       </div>
     )
   }
-  <p class='poppins'>{description}</p>
+  <p class='outfit mt-2' style='color: var(--sw-black);'>{description}</p>
   <slot />
 </Card>

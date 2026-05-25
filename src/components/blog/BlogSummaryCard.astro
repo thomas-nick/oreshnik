@@ -21,24 +21,27 @@ const { post } = Astro.props;
   </div>
 
   <div class='hidden sm:inline-block'>
-    <p class='poppins mt-2'>tags:</p>
-    <div class='flex justify-between items-center'>
-      <ul class='flex flex-wrap gap-4 mt-2'>
+    <p class='russo uppercase tracking-widest text-xs mt-2' style='color: var(--sw-red);'>
+      Tags
+    </p>
+    <div class='flex justify-between items-center mt-2'>
+      <ul class='flex flex-wrap gap-3'>
         {
-          post.data.tags.map((tag) => {
-            return (
-              <li>
-                <a class="sanchez" href={`/blog/tags/${tag.toLowerCase()}/`}>
-                  <Pill>{tag}</Pill>
-                </a>
-              </li>
-            );
-          })
+          post.data.tags.map((tag) => (
+            <li>
+              <a class='sanchez' href={`/blog/tags/${tag.toLowerCase()}/`}>
+                <Pill>{tag}</Pill>
+              </a>
+            </li>
+          ))
         }
       </ul>
       {
         post.data.draft && (
-          <span class='rounded-full border-2 border-black bg-green-300 px-4 py-1 text-sm card-shadow'>
+          <span
+            class='rounded-full border-2 px-3 py-1 text-xs card-shadow russo uppercase tracking-widest'
+            style='border-color: var(--sw-black); background-color: var(--sw-coral); color: var(--sw-black);'
+          >
             Draft
           </span>
         )

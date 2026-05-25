@@ -1,0 +1,28 @@
+---
+/**
+ * 8-point Soviet-poster star burst, used as a hero accent.
+ * Defaults to teal; passes through `class` for color/size overrides.
+ */
+interface Props {
+  class?: string;
+  size?: number;
+}
+const { class: className = '', size = 220 } = Astro.props;
+---
+
+<svg
+  xmlns='http://www.w3.org/2000/svg'
+  viewBox='-50 -50 100 100'
+  width={size}
+  height={size}
+  class={className}
+  aria-hidden='true'
+>
+  <g fill='currentColor'>
+    <path d='M0,-48 L8,-8 L48,0 L8,8 L0,48 L-8,8 L-48,0 L-8,-8 Z' />
+    <path
+      d='M-34,-34 L4,-4 L34,-34 L4,4 L34,34 L-4,4 L-34,34 L-4,-4 Z'
+      opacity='0.6'
+    />
+  </g>
+</svg>

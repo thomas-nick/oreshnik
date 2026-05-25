@@ -13,16 +13,23 @@ const { headings = [] } = Astro.props;
 ---
 
 <aside>
-  <nav class='hidden lg:block sticky top-6'>
-    <ul>
+  <nav class='hidden lg:block sticky top-6 pr-8'>
+    <p
+      class='sw-kicker mb-3'
+      style='color: var(--sw-coral);'
+    >
+      Index
+    </p>
+    <ul class='border-l-2 pl-4' style='border-color: var(--sw-teal);'>
       {
         headings.map((heading) => (
           <li class='py-1'>
-            {[...Array(heading.depth - 1)].map((_, _i) => (
-              <span class='inline-block w-4' />
+            {[...Array(Math.max(0, heading.depth - 1))].map((_, _i) => (
+              <span class='inline-block w-3' />
             ))}
             <a
-              class='text-black transition-all duration-150 ease-in-out hover:text-stone-500 poppins'
+              class='outfit text-sm transition-colors duration-150'
+              style='color: var(--sw-cream);'
               href={`#${heading.slug}`}
             >
               {heading.text}
@@ -33,3 +40,9 @@ const { headings = [] } = Astro.props;
     </ul>
   </nav>
 </aside>
+
+<style>
+  aside a:hover {
+    color: var(--sw-coral) !important;
+  }
+</style>

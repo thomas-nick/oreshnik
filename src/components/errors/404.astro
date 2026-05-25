@@ -1,16 +1,30 @@
 ---
 ---
 
-<section class='flex flex-col gap-8 justify-between'>
-  <p class='text-9xl font-bold dm-serif'>404</p>
-  <h2 class='text-4xl outfit'>Page Not Found</h2>
-  <p class='text-xl sm:text-3xl sanchez'>
-    Sorry, we couldn't find the page you were looking for.
+<section
+  class='flex flex-col gap-6 max-w-3xl mx-auto rounded-lg border-[3px] p-8 md:p-12 card-shadow'
+  style='background-color: var(--sw-cream); border-color: var(--sw-black); color: var(--sw-black);'
+>
+  <p class='sw-kicker' style='color: var(--sw-red);'>Lost transmission</p>
+  <p
+    class='russo text-7xl md:text-9xl leading-none'
+    style='color: var(--sw-red);'
+  >
+    404
+  </p>
+  <h2 class='russo text-3xl md:text-5xl' style='color: var(--sw-black);'>
+    Signal not found
+  </h2>
+  <p class='outfit text-lg md:text-2xl' style='color: var(--sw-black);'>
+    The page you were tuning into has drifted out of range. Try a stronger
+    antenna, or head back to the main broadcast.
   </p>
   <a
     href='/'
     title='Go back home'
-    class='w-48 border-2 border-black px-4 py-2 text-center transition-colors duration-150 ease-in-out hover:bg-red-300 poppins'
-    >&larr; Go Home</a
+    class='russo uppercase tracking-widest text-sm border-2 px-4 py-2 inline-block w-fit'
+    style='border-color: var(--sw-black); background-color: var(--sw-red); color: var(--sw-cream);'
   >
+    &larr; Return to base
+  </a>
 </section>

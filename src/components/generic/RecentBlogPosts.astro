@@ -14,19 +14,27 @@ const posts = await getCollection('blog', ({ data }) => !data.draft).then(
 );
 ---
 
-<section class='mt-8'>
-  <Card>
-    <div class='flex justify-between items-start'>
-      <h2 class='text-2xl md:text-4xl lg:text-6xl mb-8 dm-serif'>
-        Recent Blogposts
-      </h2>
+<section class='mt-10'>
+  <Card color='#f4e8c8'>
+    <div class='flex flex-wrap justify-between items-start gap-3'>
+      <div>
+        <p class='sw-kicker'>Latest dispatches</p>
+        <h2
+          class='russo mt-2 text-2xl md:text-4xl lg:text-5xl'
+          style='color: var(--sw-black);'
+        >
+          Recent <span style='color: var(--sw-red);'>posts</span>
+        </h2>
+      </div>
       <div class='hidden md:block'>
-        <Button href='/blog/'>Go to blog &rarr;</Button>
+        <Button href='/blog/'>All posts &rarr;</Button>
       </div>
       <div class='block md:hidden'>
-        <Button href='/blog/'>to blog</Button>
+        <Button href='/blog/'>All posts</Button>
       </div>
     </div>
-    <BlogList posts={posts} />
+    <div class='mt-6'>
+      <BlogList posts={posts} />
+    </div>
   </Card>
 </section>

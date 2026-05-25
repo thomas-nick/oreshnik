@@ -5,14 +5,69 @@ interface Props {
 }
 
 const { pubDate, author } = Astro.props;
+const formatted = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 ---
 
-<article class='w-full max-w-sm poppins md:max-w-prose md:prose md:prose-slate'>
-  <a href='/blog/' title='Back to blog'>&larr; Back to blog</a>
-  <p class='text-sm text-slate-700 md:text-base'>
-    Published on {pubDate} by {author}
+<article
+  class='w-full max-w-prose mx-auto rounded-lg border-[3px] p-6 md:p-10 card-shadow prose md:prose-lg poppins'
+  style='background-color: var(--sw-cream); border-color: var(--sw-black); color: var(--sw-black);'
+>
+  <a
+    href='/blog/'
+    title='Back to blog'
+    class='russo uppercase tracking-widest text-xs no-underline'
+    style='color: var(--sw-red);'
+  >
+    &larr; Back to dispatches
+  </a>
+
+  <p class='sw-kicker mt-4' style='color: var(--sw-red);'>
+    Filed {formatted} &middot; {author}
   </p>
+
   <slot />
-  <p class='text-slate-700'>Written by {author}</p>
-  <a href='/blog/' title='Back to blog'>&larr; Back to blog</a>
+
+  <hr style='border-color: var(--sw-black); opacity: 0.3;' class='my-8' />
+
+  <p class='outfit text-sm' style='color: var(--sw-black); opacity: 0.7;'>
+    Written by {author}.
+  </p>
+  <a
+    href='/blog/'
+    title='Back to blog'
+    class='russo uppercase tracking-widest text-xs no-underline'
+    style='color: var(--sw-red);'
+  >
+    &larr; Back to dispatches
+  </a>
 </article>
+
+<style is:global>
+  /* Make Tailwind prose readable on the cream paper card */
+  article.prose,
+  article.prose-lg {
+    --tw-prose-body: var(--sw-black);
+    --tw-prose-headings: var(--sw-black);
+    --tw-prose-lead: var(--sw-black);
+    --tw-prose-links: var(--sw-red);
+    --tw-prose-bold: var(--sw-black);
+    --tw-prose-counters: var(--sw-red);
+    --tw-prose-bullets: var(--sw-red);
+    --tw-prose-hr: var(--sw-black);
+    --tw-prose-quotes: var(--sw-black);
+    --tw-prose-quote-borders: var(--sw-red);
+    --tw-prose-captions: var(--sw-black);
+    --tw-prose-code: var(--sw-black);
+    --tw-prose-pre-code: var(--sw-cream);
+    --tw-prose-pre-bg: var(--sw-black);
+    --tw-prose-th-borders: var(--sw-black);
+    --tw-prose-td-borders: var(--sw-black);
+  }
+  article.prose :is(h1, h2, h3, h4) {
+    font-family: 'Russo One', 'Outfit', sans-serif;
+  }
+</style>

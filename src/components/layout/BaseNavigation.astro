@@ -13,30 +13,31 @@ const navigationItems = [
 ];
 
 const socialIcons: Array<{ name: string; url: string; icon: SocialIconName }> = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com/thomas-nick',
-    icon: 'github',
-  },
-  { name: 'RSS', url: '/feed.xml', icon: 'rss' },
+  { name: 'GitHub', url: 'https://github.com/thomas-nick', icon: 'github' },
+  { name: 'RSS',    url: '/feed.xml',                       icon: 'rss' },
 ];
 
 const { pageTitle } = Astro.props;
 ---
 
-<header class='border-b-4 border-black flex justify-between p-6 items-center'>
+<header
+  class='border-b-4 border-black flex justify-between p-6 items-center relative z-10'
+  style='background-color: rgba(10, 10, 31, 0.55); backdrop-filter: blur(6px);'
+>
   {pageTitle && <h1 class='hidden'>{pageTitle}</h1>}
-  <a href='/' title='Back to Home'>
-    <p class='righteous md:text-5xl'>Oreshnik</p>
+
+  <a href='/' title='Back to Home' class='sw-wordmark'>
+    Oreshnik
   </a>
+
   <nav class='hidden md:inline-block'>
     <h2 class='hidden'>Navigation</h2>
-    <ul class='flex gap-8 poppins items-center'>
+    <ul class='flex gap-6 items-center poppins'>
       {
         navigationItems.map((item) => (
           <li>
             <a
-              class='text-lg font-medium hover:text-green-700 hover:underline transition-all duration-150 ease-in-out'
+              class='nav-link text-lg font-medium'
               href={item.url}
               title={`Go to ${item.name}`}
             >
@@ -46,10 +47,7 @@ const { pageTitle } = Astro.props;
         ))
       }
       <li>
-        <a
-          href='/admin/'
-          class='text-sm font-medium hover:text-green-700 hover:underline'
-        >
+        <a href='/admin/' class='nav-link text-sm uppercase tracking-widest'>
           Editor
         </a>
       </li>
@@ -58,8 +56,8 @@ const { pageTitle } = Astro.props;
           <li>
             <a
               href={item.url}
-              class='hover:text-green-700 hover:underline transition-all duration-150 ease-in-out'
-              target='_blank'
+              class='nav-link'
+              target={item.url.startsWith('/') ? '_self' : '_blank'}
               rel='noopener'
               title={item.name}
             >
@@ -70,9 +68,21 @@ const { pageTitle } = Astro.props;
       }
     </ul>
   </nav>
-  <nav class='md:hidden flex gap-4 poppins'>
+
+  <nav class='md:hidden flex gap-4 poppins items-center'>
     <h2 class='hidden'>Mobile Navigation</h2>
-    <a href='/blog/'>Blog</a>
-    <a href='/admin/'>Editor</a>
+    <a href='/blog/' class='nav-link'>Blog</a>
+    <a href='/admin/' class='nav-link uppercase text-sm tracking-widest'>Editor</a>
   </nav>
 </header>
+
+<style>
+  .nav-link {
+    color: var(--sw-cream);
+    transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+  }
+  .nav-link:hover {
+    color: var(--sw-coral);
+    transform: translateY(-1px);
+  }
+</style>

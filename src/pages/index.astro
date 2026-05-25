@@ -1,47 +1,147 @@
 ---
+import HeroBurst from '@components/generic/HeroBurst.astro';
 import RecentBlogPosts from '@components/generic/RecentBlogPosts.astro';
-import MobileSocials from '@components/home/MobileSocials.astro';
 import { Button, Card, Pill } from '@eliancodes/brutal-ui';
 import Layout from '@layouts/Default.astro';
 
 const builtWith = [
-  { name: 'Astro', url: 'https://astro.build/' },
-  { name: 'Brutal theme', url: 'https://brutal.elian.codes/' },
-  { name: 'Tailwind CSS', url: 'https://tailwindcss.com/' },
-  { name: 'Sveltia CMS', url: 'https://sveltia.com/' },
+  { name: 'Astro',   url: 'https://astro.build/' },
+  { name: 'Brutal',  url: 'https://brutal.elian.codes/' },
+  { name: 'Tailwind', url: 'https://tailwindcss.com/' },
+  { name: 'Sveltia', url: 'https://sveltia.com/' },
+];
+
+const stats = [
+  { label: 'EST.',   value: '2026' },
+  { label: 'STATUS', value: 'Active' },
+  { label: 'BAND',   value: '0.0001 MHz' },
 ];
 ---
 
 <Layout
   title='Home'
   pageTitle='Oreshnik | Home'
-  description='Personal blog and portfolio — design, UX, and whatever else is worth writing down.'
+  description='Personal blog and portfolio — design, UX, and the occasional dispatch from low orbit.'
 >
-  <main class='bg-pink-theme p-6'>
-    <MobileSocials />
-    <section id='about' class='grid md:grid-cols-8 gap-8 mt-4'>
+  <main class='bg-pink-theme p-6 relative'>
+    <!-- ===== HERO ===== -->
+    <section class='relative grid md:grid-cols-12 gap-6 mt-2'>
       <h2 class='hidden'>About</h2>
-      <div class='col-span-4'>
-        <Card>
-          <div class='flex flex-col justify-between items-start gap-4'>
-            <p class='mt-4 outfit text-2xl md:text-5xl lg:text-7xl'>
-              Nick Thomas
+
+      <!-- Big intro card -->
+      <div class='md:col-span-8'>
+        <Card color='#f4e8c8'>
+          <div class='relative overflow-hidden'>
+            <p class='sw-kicker'>Transmission // 01</p>
+
+            <h1
+              class='russo mt-2 text-5xl md:text-7xl lg:text-8xl leading-[0.95]'
+              style='color: var(--sw-black);'
+            >
+              <span style='color: var(--sw-red);'>NICK</span><br />
+              THOMAS
+            </h1>
+
+            <p
+              class='outfit mt-4 text-lg md:text-2xl max-w-prose'
+              style='color: var(--sw-black);'
+            >
+              Design, UX, UI &mdash; broadcast from a small workshop somewhere
+              between Bangkok and the upper atmosphere.
             </p>
-            <p class='mt-2 outfit text-xl md:text-3xl lg:text-5xl'>
-              Design, UX, UI — and the occasional blog post.
-            </p>
-            <Button target={'_self'} href='/blog/'>
-              Read the blog &rarr;
-            </Button>
+
+            <div class='mt-6 flex gap-3 flex-wrap items-center'>
+              <Button target='_self' href='/blog/'>
+                Read the dispatches &rarr;
+              </Button>
+              <a
+                href='#about'
+                class='russo uppercase tracking-widest text-sm border-b-2'
+                style='color: var(--sw-red); border-color: var(--sw-red);'
+              >
+                Manifest
+              </a>
+            </div>
+
+            <!-- Decorative burst, top-right -->
+            <div
+              class='absolute -top-6 -right-6 md:-top-2 md:-right-4 pointer-events-none'
+              style='color: var(--sw-teal);'
+            >
+              <HeroBurst size={140} />
+            </div>
           </div>
         </Card>
       </div>
-      <div class='col-span-2'>
-        <Card>
-          <h2 class='text-2xl md:text-4xl lg:text-6xl mb-8 dm-serif'>
+
+      <!-- Side: stats panel -->
+      <div class='md:col-span-4'>
+        <Card color='#0e0e0e'>
+          <div style='color: var(--sw-cream);'>
+            <p class='sw-kicker' style='color: var(--sw-coral);'>Vitals</p>
+            <ul class='mt-4 space-y-3 outfit'>
+              {
+                stats.map((s) => (
+                  <li class='flex justify-between items-baseline gap-3'>
+                    <span class='text-xs uppercase tracking-widest opacity-70'>
+                      {s.label}
+                    </span>
+                    <span
+                      class='russo text-xl'
+                      style='color: var(--sw-teal-hi);'
+                    >
+                      {s.value}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+
+            <div class='mt-6 pt-4 border-t border-dashed' style='border-color: var(--sw-teal);'>
+              <p class='text-xs uppercase tracking-widest opacity-60'>Coordinates</p>
+              <p class='russo text-base mt-1' style='color: var(--sw-cream);'>
+                13.7563° N&nbsp;&nbsp; 100.5018° E
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT / SECONDARY ===== -->
+    <section id='about' class='grid md:grid-cols-8 gap-6 mt-8'>
+      <div class='md:col-span-5'>
+        <Card color='#f4e8c8'>
+          <p class='sw-kicker'>Manifest</p>
+          <h2
+            class='russo mt-2 text-3xl md:text-5xl lg:text-6xl'
+            style='color: var(--sw-black);'
+          >
+            About this <span style='color: var(--sw-red);'>signal</span>
+          </h2>
+          <p class='outfit mt-4' style='color: var(--sw-black);'>
+            Personal site for design notes, half-finished projects, and the
+            occasional travelogue. Posts are typed at <a href='/admin/'>/admin</a>,
+            saved to <a href='https://github.com/thomas-nick/oreshnik'>git</a>,
+            and broadcast to <a href='https://mahoot.xyz'>mahoot.xyz</a>.
+          </p>
+          <p class='outfit mt-3' style='color: var(--sw-black);'>
+            Best read with a strong tea, weak Wi-Fi, and a healthy disregard for
+            the official forecast.
+          </p>
+        </Card>
+      </div>
+
+      <div class='md:col-span-3'>
+        <Card color='#3fa3a0'>
+          <p class='sw-kicker' style='color: var(--sw-black);'>Apparatus</p>
+          <h2
+            class='russo mt-2 text-2xl md:text-4xl'
+            style='color: var(--sw-black);'
+          >
             Built with
           </h2>
-          <ul class='flex gap-4 flex-wrap'>
+          <ul class='flex gap-3 flex-wrap mt-4'>
             {
               builtWith.map((item) => (
                 <li>
@@ -62,19 +162,9 @@ const builtWith = [
           </ul>
         </Card>
       </div>
-      <div class='col-span-2'>
-        <Card>
-          <h2 class='text-2xl md:text-4xl lg:text-6xl mb-4 dm-serif'>
-            This site
-          </h2>
-          <p class='poppins'>
-            A personal site on the <a href='https://brutal.elian.codes/'>Brutal</a> Astro
-            theme. Posts are edited at <a href='/admin/'>/admin</a> via Sveltia CMS and
-            deployed to <a href='https://mahoot.xyz'>mahoot.xyz</a>.
-          </p>
-        </Card>
-      </div>
     </section>
+
+    <!-- ===== Recent ===== -->
     <RecentBlogPosts />
   </main>
 </Layout>
