@@ -1,11 +1,12 @@
 ---
-title: "Hello, low orbit"
+title: Hello, low orbit
+description: First broadcast. Why this site exists, what's on it, and what you can expect from the next few transmissions.
+author: Nick Thomas
 pubDate: 2026-05-25
-author: "Nick Thomas"
 tags:
   - meta
   - design
-description: "First broadcast. Why this site exists, what's on it, and what you can expect from the next few transmissions."
+imgUrl: uploads/oresh.webp
 draft: false
 ---
 
@@ -33,6 +34,6 @@ unapologetic willingness to take up space.
 - Or just check back. There's no algorithm here, no newsletter form yet, and
   no notifications. The signal is faint by design.
 
-> The best part of building your own site is choosing what *not* to put on it.
+> The best part of building your own site is choosing what _not_ to put on it.
 
 — Nick
