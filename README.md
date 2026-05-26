@@ -18,24 +18,9 @@ npm run dev
 
 Open http://localhost:4321
 
-## CMS
-
-1. Go to https://mahoot.xyz/admin/ (or `/admin/` locally after build)
-2. Log in with GitHub — authorize the **oreshnik** repo
-3. Edit posts under **Blog posts**
 
 OAuth uses the same Cloudflare Worker as Siam History (`sveltia-cms-auth.nthomas1999.workers.dev`). Ensure your GitHub OAuth app callback URL matches the worker.
 
-## Deploy
-
-Push to `main` deploys to Hostinger at **mahoot.xyz**.
-
-**Repo secrets** (Settings → Secrets → Actions):
-
-| Secret | Value |
-|--------|--------|
-| `HOSTINGER_API_TOKEN` | Hostinger API token |
-| `HOSTINGER_DOMAIN` | `mahoot.xyz` |
 
 ## Content
 
