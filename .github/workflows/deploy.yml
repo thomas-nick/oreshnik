@@ -1,4 +1,4 @@
-name: Build and deploy to Hostinger
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -7,18 +7,18 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: '1'
-      HOSTINGER_API_TOKEN: ${{ secrets.HOSTINGER_API_TOKEN }}
-      HOSTINGER_DOMAIN: ${{ secrets.HOSTINGER_DOMAIN }}
     steps:
       - name: Check out
         uses: actions/checkout@v4
@@ -39,33 +39,20 @@ jobs:
         run: |
           test -f dist/index.html
           test -f dist/sitemap-index.xml
-          ls -lh dist | head -20
+          test -f dist/CNAME
 
-      - name: Package dist
-        id: package
-        run: |
-          ts=$(date -u +%Y%m%d_%H%M%S)
-          archive="oreshnik_${ts}.zip"
-          (cd dist && zip -qr "../${archive}" .)
-          echo "archive=${archive}" >> "$GITHUB_OUTPUT"
-
-      - name: Validate deploy secrets
-        run: |
-          if [ -z "$HOSTINGER_API_TOKEN" ] || [ -z "$HOSTINGER_DOMAIN" ]; then
-            echo "::error title=Missing secrets::Set HOSTINGER_API_TOKEN and HOSTINGER_DOMAIN in repo secrets."
-            exit 1
-          fi
-          echo "Deploying to domain: $HOSTINGER_DOMAIN"
-
-      - name: Deploy to Hostinger
-        env:
-          ARCHIVE: ${{ steps.package.outputs.archive }}
-        run: node scripts/deploy-hostinger.mjs
-
-      - name: Upload build artefact
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: oreshnik-dist
           path: dist
-          retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
